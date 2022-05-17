@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="utf-8" >
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" >
+	<title>Caça-Palavras</title>
+	<style>
+		html, body{
+			margin:0;
+			padding:0;
+			background-color:lightblue;
+		}
+		table, tr, td{
+			border:1px solid black;
+			background-color:white;
+		}
+		td{
+			font-weight:bold;
+			font-family:monospace;
+			font-size:2em;
+			color:black;
+		}
+		td:hover{
+			background-color:#f9d387;
+			cursor:pointer;
+		}
+		.selecionada, .encontrada, .errado{
+			transition:.2s linear;
+		}
+		.selecionada{
+			background-color:lightblue;
+		}
+		.encontrada{
+			background-color:lightgreen;
+		}
+		.errado{
+			background-color:red;
+		}
+		#iniciar{
+			padding:5%;
+			background-color:lightgray;
+		}
+		#jogo{
+			text-align:center;
+		}
+		#btnPlay{
+			margin:auto;
+			display:block;
+		}
+		#parabens{
+			margin:auto;
+			text-align:center;
+			color:yellow;
+			transition:.2s linear 2s;
+		}
+		#btnVoltar{
+			margin:auto;
+		}
+		button{
+			border:1px solid white;
+			outline:none;
+			background-color:lightblue;
+			transition:.2s linear;
+			font-weight:bold;
+			padding:1% 2%;
+			color:white;
+		}
+		button:hover{
+			border:1px solid lightblue;
+			outline:none;
+			color:lightblue;
+			background-color:white;
+		}
+		p{
+			font-size:1.5em;
+			margin:0;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="iniciar">
+		<button id="btnPlay">Jogar</button>
+	</div>
+	<div id="jogo" hidden>
+		<h2 hidden id="parabens">Parabéns!</h2>
+		<button hidden id="btnVoltar">voltar</button>
+		<p id="encontradas"></p>
+		<table id="tabuleiro" align="center">
+			<tr>
+				<td>R</td>
+				<td>O</td>
+				<td>A</td>
+				<td>M</td>
+				<td>A</td>
+				<td>R</td>
+				<td>E</td>
+				<td>L</td>
+				<td>O</td>
+				<td>G</td>
+				<td>P</td>
+			</tr>
+			<tr>
+				<td>S</td>
+				<td>C</td>
+				<td>V</td>
+				<td>E</td>
+				<td>D</td>
+				<td>O</td>
+				<td>M</td>
+				<td>A</td>
+				<td>H</td>
+				<td>Y</td>
+				<td>R</td>
+			</tr>
+			<tr>
+				<td>A</td>
+				<td>R</td>
+				<td>I</td>
+				<td>J</td>
+				<td>I</td>
+				<td>V</td>
+				<td>E</td>
+				<td>R</td>
+				<td>D</td>
+				<td>E</td>
+				<td>F</td>
+			</tr>
+			<tr>
+				<td>Z</td>
+				<td>B</td>
+				<td>O</td>
+				<td>L</td>
+				<td>Y</td>
+				<td>H</td>
+				<td>N</td>
+				<td>A</td>
+				<td>I</td>
+				<td>U</td>
+				<td>E</td>
+			</tr>
+			<tr>
+				<td>U</td>
+				<td>N</td>
+				<td>L</td>
+				<td>R</td>
+				<td>A</td>
+				<td>H</td>
+				<td>F</td>
+				<td>N</td>
+				<td>E</td>
+				<td>O</td>
+				<td>R</td>
+			</tr>
+			<tr>
+				<td>L</td>
+				<td>M</td>
+				<td>E</td>
+				<td>K</td>
+				<td>C</td>
+				<td>F</td>
+				<td>N</td>
+				<td>J</td>
+				<td>A</td>
+				<td>N</td>
+				<td>Q</td>
+			</tr>
+			<tr>
+				<td>H</td>
+				<td>S</td>
+				<td>T</td>
+				<td>I</td>
+				<td>R</td>
+				<td>E</td>
+				<td>B</td>
+				<td>A</td>
+				<td>U</td>
+				<td>S</td>
+				<td>F</td>
+			</tr>
+			<tr>
+				<td>O</td>
+				<td>D</td>
+				<td>A</td>
+				<td>V</td>
+				<td>E</td>
+				<td>R</td>
+				<td>M</td>
+				<td>E</td>
+				<td>L</td>
+				<td>H</td>
+				<td>O</td>
+			</tr>
+		</table>
+	</div>
+	<script>
+		var t = document.getElementById("tabuleiro");
+		var cores, primeiroclique, encontradas, data;
+		function clique(e){
+			if(cores.length > 0){
+				if(primeiroclique == false){
+					data.colunainicial = parseInt(e.target.dataset.index);
+					data.linhainicial = parseInt(e.target.parentElement.dataset.index);
+					data.letrainicial = e.target.innerText;
+					
+					if(e.target.dataset.encontrada == "true"){
+						e.target.classList.replace("encontrada", "selecionada");
+					}else{
+						e.target.classList.add("selecionada");
+					}
+					
+					primeiroclique = true;
+				}else{
+					if(data.colunainicial != parseInt(e.target.dataset.index) && data.linhainicial != parseInt(e.target.parentElement.dataset.index)){
+						return;
+					}
+					
+					data.colunafinal = parseInt(e.target.dataset.index);
+					data.linhafinal = parseInt(e.target.parentElement.dataset.index);
+					data.letrafinal = e.target.innerText;
+					
+					if(data.colunainicial > data.colunafinal){
+						var novacolunainicial = data.colunafinal;
+						var novacolunafinal = data.colunainicial;
+						data.colunainicial = novacolunainicial;
+						data.colunafinal = novacolunafinal;
+					}
+					if(data.linhainicial > data.linhafinal){
+						var novalinhainicial = data.linhafinal;
+						var novalinhafinal = data.linhainicial;
+						data.linhainicial = novalinhainicial;
+						data.linhafinal = novalinhafinal;
+					}
+					
+					primeiroclique = false;
+					
+					if(e.target.dataset.encontrada == "true"){
+						e.target.classList.replace("encontrada", "selecionada");
+					}else{
+						e.target.classList.add("selecionada");
+					}
+					comparar(data);
+				}
+			}
+		}
+		function horizontal(fn){
+			console.log("seleção horizontal");
+			for(var i = data.colunainicial; i < data.colunafinal + 1; i++){
+				var td = t.rows[data.linhainicial].cells[i];
+				if(td.dataset.encontrada == "true"){
+					td.classList.replace("encontrada", "selecionada");
+				}else{
+					td.classList.add("selecionada");
+				}
+				fn(td);
+			}
+		}
+		function vertical(fn){
+			console.log("seleção vertical");
+			for(var i = data.linhainicial; i < data.linhafinal + 1; i++){
+				var td = t.rows[i].cells[data.colunainicial];
+				if(td.dataset.encontrada == "true"){
+					td.classList.replace("encontrada", "selecionada");
+				}else{
+					td.classList.add("selecionada");
+				}
+				fn(td);
+			}
+		}
+		function comparar(data){
+			var selecionados = {
+				palavra:"",
+				elementos:[]
+			};
+			if(data.colunainicial != data.colunafinal && data.linhainicial == data.linhafinal){
+				horizontal(function(td){
+					selecionados.palavra += td.innerText;
+					selecionados.elementos.push(td);
+				});
+			}else if(data.colunainicial == data.colunafinal && data.linhainicial != data.linhafinal){
+				vertical(function(td){
+					selecionados.palavra += td.innerText;
+					selecionados.elementos.push(td);
+				});
+			}
+			if(cores.includes(selecionados.palavra)){
+				cores = cores.filter(function(p){
+					if(selecionados.palavra != p){
+						return p;
+					}
+				});
+				setTimeout(function(){
+					for(var i = 0; i < selecionados.elementos.length; i++){
+						var elemento = selecionados.elementos[i];
+						elemento.classList.replace("selecionada", "encontrada");
+						elemento.dataset.encontrada = "true";
+					}
+				}, 1000);
+				encontradas += 1;
+				document.getElementById("encontradas").innerText = "Encontradas: "+encontradas+"\n Restantes: "+ cores.length;
+				if(cores.length == 0){
+					setTimeout(function(){
+						document.getElementById("parabens").hidden = false;
+						document.getElementById("btnVoltar").hidden = false;
+					}, 2000);
+				}
+				data = {};
+			}else{
+				data = {};
+				setTimeout(function(){
+					for(var i = 0; i < selecionados.elementos.length; i++){
+						var elemento = selecionados.elementos[i];
+						elemento.classList.replace("selecionada", "errado");
+					}
+					setTimeout(function(){
+						for(var i = 0; i < selecionados.elementos.length; i++){
+							var elemento = selecionados.elementos[i];
+							if(elemento.dataset.encontrada == "true"){
+								elemento.classList.replace("errado", "encontrada");
+							}else{
+								elemento.classList.remove("errado");
+							}
+						}
+					}, 1000);
+				}, 1000);
+			}
+		}
+		function iniciaJogo(){
+			cores = ["AZUL", "AMARELO", "VERMELHO", "VERDE", "VIOLETA", "LARANJA"];
+			primeiroclique = false;
+			encontradas = 0;
+			data = {};
+			document.getElementById("encontradas").innerText = "Encontradas: "+encontradas+"\n Restantes: "+ cores.length;
+			for(var i = 0; i < t.rows.length; i++){
+				t.rows[i].id = "linha " + i;
+				t.rows[i].dataset.index = i;
+				for(var j = 0; j < t.rows[i].cells.length; j++){
+					t.rows[i].cells[j].classList = [];
+					t.rows[i].cells[j].dataset.encontrada = "false";
+					t.rows[i].cells[j].id = "coluna " + j;
+					t.rows[i].cells[j].dataset.index = j;
+					t.rows[i].cells[j].addEventListener("click", clique);
+				}
+			}
+			document.getElementById("iniciar").hidden = true;
+			document.getElementById("parabens").hidden = true;
+			document.getElementById("jogo").hidden = false;
+			document.getElementById("btnVoltar").hidden = true;
+		}
+		var btnPlay = document.getElementById("btnPlay");
+		btnPlay.onclick = function(){
+			iniciaJogo();
+		}
+		var btnVoltar = document.getElementById("btnVoltar");
+		btnVoltar.onclick = function(){
+			btnVoltar.hidden = true;
+			document.getElementById("iniciar").hidden = false;
+			document.getElementById("parabens").hidden = true;
+			document.getElementById("jogo").hidden = true;
+		}
+	</script>
+</body>
+
+</html>
