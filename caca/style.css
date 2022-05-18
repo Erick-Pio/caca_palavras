@@ -1,0 +1,176 @@
+html, body{
+    margin:0;
+    padding:0;
+    background-color:lightblue;
+    background-image: url(https://c.tenor.com/bOJzGR2YhHQAAAAC/dedsec-logo.gif)
+}
+.logo{
+    width: 10%;
+    height: 10vh;
+    display: flex;
+}
+
+.texto{
+    color: white;
+    display: flex;
+}
+
+.column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 25.5%;
+}
+
+
+.card-row{
+    display: flex;
+    flex-direction: row;
+}
+
+.card-row-1{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 8%;
+    height: 100%;
+    width: 100%;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-bottom: 5%;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    color: rgb(163, 1, 163);
+    width: 40%;
+    height: 100%;
+    justify-content: center;
+}
+
+.flipinner {
+    display: flex;
+    align-items: center;
+    color: white;
+    border: rgb(163, 1, 163) solid 0.4px;
+    width: 100%;
+    height: 8vh;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card:hover .flipinner {
+    transform: rotateX(180deg);
+}
+
+.frontcard, .backcard {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.frontcard {
+    color: rgb(163, 1, 163);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: rgb(163, 1, 163);
+    border: rgb(163, 1, 163) solid 0.4px;
+    height: 100%;
+    justify-content: center;
+    background-color: black;
+}
+
+.backcard {
+    transform: rotateX(180deg);
+    display: flex;
+    align-items: center;
+    color: rgb(3, 207, 3);
+    border: none;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+    background-color: black;
+}
+
+table, tr, td{
+    border-radius:1px solid black;
+    background-color:rgb(3, 207, 3);
+}
+td{
+    font-weight:bold;
+    font-family:monospace;
+    font-size:2em;
+    color:black;
+}
+td:hover{
+    background-color: white;
+    cursor:progress;
+}
+.selecionada, .encontrada, .errado{
+    transition:.2s linear;
+}
+.selecionada{
+    background-color:lightblue;
+}
+.encontrada{
+    background-color:rgb(163, 1, 163);
+}
+.errado{
+    background-color:red;
+}
+#iniciar{
+    padding:5%;
+    background-color:black;
+    display: flex;
+}
+#jogo{
+    text-align:center;
+}
+#btnPlay{
+    margin:auto;
+    display:block;
+    background-color: rgb(3, 207, 3);
+}
+#encontradas{
+    color: white;
+}
+#parabens{
+    margin:auto;
+    text-align:center;
+    color: rgb(163, 1, 163);
+    transition:.2s linear 2s;
+}
+#btnVoltar{
+    margin:auto;
+}
+button{
+    border:1px solid white;
+    outline:none;
+    background-color:lightblue;
+    transition:.2s linear;
+    font-weight:bold;
+    padding:1% 2%;
+    color:white;
+}
+button:hover{
+    border:1px solid lightblue;
+    outline:none;
+    color:lightblue;
+    background-color:white;
+}
+p{
+    font-size:1.5em;
+    margin:0;
+}
